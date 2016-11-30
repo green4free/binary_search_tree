@@ -29,13 +29,28 @@ impl Tree {
 			Cons(data, ref left, ref right) => format!("{} {} {}", left.stringify(), data, right.stringify()),
 		}
 	}
+
+	fn len(&self) -> u32 {
+		match *self {
+			Nil => 0,
+			Cons(data, ref left, ref right) => 1 + left.len() + right.len(),
+		}	
+	}
+
+	fn depth(&self) -> u32 {
+		match *self {
+			Nil => 0,
+			Cons(data, ref left, ref right) => {
+				let (l, r) = (left.depth(), right.depth());
+				if l > r {
+					l + 1
+				}else{
+					r + 1
+				}
+			}
+		}
+	}
 }
-
-
-
-
-
-
 
 
 
@@ -50,5 +65,6 @@ fn main() {
 	tree = tree.add(11);
 	tree = tree.add(10);
 	tree = tree.add(4);
+	println!("len {}, depth {}", tree.len(), tree.depth()); 
 	println!("{}", tree.stringify());    
 }
