@@ -66,6 +66,30 @@ impl Tree {
 			},
 		}
 	}
+
+	fn remove(self, elem: u32) -> Tree {
+		if self.find(elem) {
+			match self {
+				Nil => Nil,
+				Cons(data, left, right) => {
+					if elem < data {
+						Cons(data, Box::new(left.remove(elem)), right)
+					}else if elem > data {
+						Cons(data, left, Box::new(right.remove(elem)))
+					}else {
+						let mut temp = *left;
+						let numbers: Vec<u32> = right.stringify().split_whitespace().map(|s| s.parse().unwrap()).collect();
+						for i in 0..numbers.len() {
+							temp = temp.add(numbers[i]);
+						}
+						temp
+					}
+				},
+			}
+		}else {
+			self
+		}
+	}
 }
 
 
@@ -77,7 +101,7 @@ fn main() {
 	tree = tree.add(8);
 	tree = tree.add(3);
 	tree = tree.add(6);
-	tree = tree.add(9);
+	tree = tree.add(0);
 	tree = tree.add(11);
 	tree = tree.add(10);
 	tree = tree.add(4);
@@ -88,7 +112,20 @@ fn main() {
 	tree = tree.add(1);
         tree = tree.add(12);
         tree = tree.add(8);
+	tree = tree.add(9);
+	tree = tree.add(45);
 	println!("len {}, depth {}", tree.len(), tree.depth());
         println!("{}", tree.stringify());
-        println!("6{} 12{}", tree.find(6), tree.find(12)); 
+        println!("6{} 12{}", tree.find(6), tree.find(12));
+	tree = tree.remove(11);
+	tree = tree.remove(2);
+	println!("len {}, depth {}", tree.len(), tree.depth());
+        println!("{}", tree.stringify());
+	tree = tree.remove(5);
+	println!("len {}, depth {}", tree.len(), tree.depth());
+        println!("{}", tree.stringify());
+        tree = tree.add(5);
+	println!("len {}, depth {}", tree.len(), tree.depth());
+        println!("{}", tree.stringify());
 }
+
