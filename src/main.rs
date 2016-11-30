@@ -50,6 +50,19 @@ impl Tree {
 			}
 		}
 	}
+	
+	fn find(&self, elem: u32) -> bool {
+		match *self {
+			Nil => false,
+			Cons(data, ref left, ref right) => {
+				if data == elem {
+					true
+				}else{
+					left.find(elem) | right.find(elem)
+				}
+			},
+		}
+	}
 }
 
 
@@ -66,5 +79,6 @@ fn main() {
 	tree = tree.add(10);
 	tree = tree.add(4);
 	println!("len {}, depth {}", tree.len(), tree.depth()); 
-	println!("{}", tree.stringify());    
+	println!("{}", tree.stringify());
+	println!("6{} 12{}", tree.find(6), tree.find(12));    
 }
