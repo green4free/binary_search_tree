@@ -11,18 +11,21 @@ impl Tree {
 	}
 
 	fn add(self, elem: u32) -> Tree {
-		match self{
-			Nil => Cons(elem, Box::new(Nil), Box::new(Nil)),
-			Cons(data, left, right) => {
-				if elem < data {
-					Cons(data, Box::new(left.add(elem)), right)
-				}else{
-					Cons(data, left, Box::new(right.add(elem)))
-				}
-			},
+		if !self.find(elem) {
+			match self{
+				Nil => Cons(elem, Box::new(Nil), Box::new(Nil)),
+				Cons(data, left, right) => {
+					if elem < data {
+						Cons(data, Box::new(left.add(elem)), right)
+					}else{
+						Cons(data, left, Box::new(right.add(elem)))
+					}
+				},
+			}
+		}else{
+			self
 		}
 	}
-	
 	fn stringify(&self) -> String {
 		match *self {
 			Nil => format!(""),
@@ -80,5 +83,12 @@ fn main() {
 	tree = tree.add(4);
 	println!("len {}, depth {}", tree.len(), tree.depth()); 
 	println!("{}", tree.stringify());
-	println!("6{} 12{}", tree.find(6), tree.find(12));    
+	println!("6{} 12{}", tree.find(6), tree.find(12));
+	tree = tree.add(5);
+	tree = tree.add(1);
+        tree = tree.add(12);
+        tree = tree.add(8);
+	println!("len {}, depth {}", tree.len(), tree.depth());
+        println!("{}", tree.stringify());
+        println!("6{} 12{}", tree.find(6), tree.find(12)); 
 }
