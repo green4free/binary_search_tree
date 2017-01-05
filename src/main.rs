@@ -117,8 +117,8 @@ fn main() {
 	println!("len {}, depth {}", tree.len(), tree.depth());
         println!("{}", tree.stringify());
         println!("6{} 12{}", tree.find(6), tree.find(12));
+	tree = tree.remove(9);
 	tree = tree.remove(11);
-	tree = tree.remove(2);
 	println!("len {}, depth {}", tree.len(), tree.depth());
         println!("{}", tree.stringify());
 	tree = tree.remove(5);
